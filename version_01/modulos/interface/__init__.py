@@ -1,4 +1,4 @@
-from modulos.tests import leiaInt
+from version_01.modulos.tests import leiaInt
 
 def linha(tamanho=42):
     return '-' * tamanho

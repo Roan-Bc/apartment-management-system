@@ -12,6 +12,16 @@ def leiaInt(valor):
             continue
         except KeyboardInterrupt:
             print(f'\nO usuário preferiu não informar os dados.')
-            return 3
         else:
             return v
+
+def leiaStr(txt):
+    caracteres_invalidos = """!@#$%^&*()_+=[]{}|\/:;"'<>,.?`~"""
+    while True:
+        vT = str(input(txt))
+        if vT.isalnum() or vT.isalpha():
+            return vT
+        elif not any(c in caracteres_invalidos for c in vT):
+            return vT
+        else:
+            print(f'{vT} Não é um nome válido, digite novamente!')
