@@ -33,6 +33,17 @@ O projeto será desenvolvido em versões, cada uma aplicando novos conhecimentos
 
 - Git/GitHub para versionamento
 
+----
+
+## 📚 Cursos que estou fazendo para o desenvolvimento desse projeto:
+
+- [🎥Introdução a Algoritmos](https://www.youtube.com/watch?v=8mei6uVttho&list=PLHz_AreHm4dmSj0MHol_aoNYCSGFqvfXV&ab_channel=CursoemV%C3%ADdeo) ✅
+- [🎥Curso Python Mundo 01](https://www.youtube.com/watch?v=S9uPNppGsGo&list=PLHz_AreHm4dlKP6QQCekuIPky1CiwmdI6&ab_channel=CursoemV%C3%ADdeo) ✅
+- [🎥Curso Python Mundo 02](https://www.youtube.com/watch?v=nJkVHusJp6E&list=PLHz_AreHm4dk_nZHmxxf_J0WRAqy5Czye) ✅
+- [🎥Curso Python Mundo 03](https://www.youtube.com/watch?v=0LB3FSfjvao&list=PLHz_AreHm4dksnH2jVTIVNviIMBVYyFnH) ✅
+- [🎥CS50P](https://www.youtube.com/watch?v=fD5DqlO2dyQ&list=PLRqGANMTmslTGsfYUqvklm7ZAyv36FRAv&index=7&ab_channel=estude.org) 🔄
+
+
 ---
 ## 🤝 Contribuições
 
