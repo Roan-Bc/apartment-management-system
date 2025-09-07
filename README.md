@@ -22,45 +22,8 @@ O sistema busca resolver um problema real de gerenciamento de apartamentos, clie
 
 O projeto será desenvolvido em versões, cada uma aplicando novos conhecimentos adquiridos.
 
-### ✅ Versão 1 (atual)
-
-- Implementação usando listas e dicionários.
-
-- Menu simples no terminal.
-
-- Operações básicas:
-
-- Cadastrar apartamento
-
-- Cadastrar cliente
-
-- Criar reserva
-
-- Listar reservas
-
-### 🔜 Versão 2 (POO)
-
-- Reestruturação para usar classes (Cliente, Apartamento, Reserva).
-
-- Organização do código em módulos.
-
-- Encapsulamento da lógica.
-
-### 🔜 Versão 3 (Banco de Dados)
-
-- Integração com SQLite.
-
-- Criação de tabelas (clientes, apartamentos, reservas).
-
-- Consultas SQL para relatórios.
-
-### 🔜 Versão 4 (Interface)
-
-- Interface gráfica ou web.
-
-- Relatórios e calendário de reservas.
-
-- Possível integração com plataformas externas (ex: importação de dados do Airbnb).
+### ✅ Versão 1 (Em desenvolvimento)
+- Caso deseje ver os detalhes da documentação dessa versão, basta acessar a pasta version_01 e clicar no README.md
 
 ---
 
