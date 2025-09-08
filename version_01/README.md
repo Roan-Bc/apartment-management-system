@@ -7,9 +7,138 @@
 
 ### ✅ Versão 1 (atual)
 
-- 05/09/2025: Primeiro commit do projeto, com apenas os arquivos base.
 
-- 06/09/2025: Foi feito uma mudança em relação a organização dos arquivos, agora vou deixar o projeto separado por pastas, com o nome da versão(version_0X),
+- 📅 07/09/2025: Hoje fiz a implementação da minha estrutura inicial de alguns sub-menus e também terminei de fazer as funções de exibir, editar e excluir apartamentos, a princípio está funcionando mas quero fazer algumas modificações amanhã pois acho que da fazer de uma forma melhor.
+
+  Referente a estrutura de menu e sub-menu, a princpio está assim:
+
+      while True:
+        main_menu = exibeMenu(['Apartamento', 'Cliente', 'Sair do sistema'])
+        match main_menu:
+            case 1:
+    
+                while True:
+                    sub_menu = exibeMenu(['Cadastrar Apartamento ', 'Exibir Apartamentos', 'Editar Apartamento','Excluir Apartamentos', 'Voltar ao menu'])
+                    match sub_menu:
+                        case 1:
+                            cabecalho('Cadastrar apartamento')
+                            cadastrar_apartamento(apartamento)
+                            linha()
+                        case 2:
+                            cabecalho('Exibir apartamentos')
+                            exibir_apartamentos(apartamento)
+                            linha()
+                        case 3:
+                            cabecalho('Editar apartamento')
+                            exibir_apartamentos(apartamento)
+                            linha()
+    
+                            while True:
+                                opcao = leiaInt('Digite o número do apartamento que deseja editar(999 para sair): ')
+                                if opcao == 999:
+                                    break
+                                opcao -= 1
+                                if opcao < len(apartamento):
+                                    while True:
+                                        sub_menu = exibeMenu(['Editar todos os dados do apartamento','Editar um dado especifico do apartamento','Voltar ao menu'])
+                                        if sub_menu == 3:
+                                            break
+                                        elif sub_menu == 1:
+                                            editar_apartamento_completo(apartamento, opcao)
+                                            break
+                                        else:
+                                            print('Opção inválida!')
+                                    break
+                                else:
+                                    print('Opção inválida!')
+                        case 4:
+                            cabecalho('Excluir apartamentos')
+                            excluir_apartamento(apartamento)
+                            linha()
+                        case 5:
+                            break
+                        case _:
+                            print('Opção inválida!')
+            case 2:
+    
+                while True:
+                    sub_menu = exibeMenu(['Cadastrar Cliente ', 'Exibir Cliente', 'Excluir Cliente', 'Voltar ao menu'])
+                    match sub_menu:
+                        case 1:
+                            print('Cadastrar Cliente')
+                        case 2:
+                            print('Exibir clientes')
+                        case 3:
+                            print('Excluir cliente')
+                        case 4:
+                            break
+                        case _:
+                            print('Opção inválida!')
+            case 3:
+                linha()
+                print('Saindo do sistema...')
+                break
+            case _:
+                print('Opção inválida!')
+
+
+  Agora referente as novas funções que fiz no módulo Apartament, foram essas:
+    
+  Funções:
+  
+    - *exibir_apartamentos*: Recebe como parâmetro uma lista, não possui retorno.
+
+      A função basicamente, vai retornar print da posição e o nome do apartamento até não ter mais nenhum apartamento apra mostrar.
+
+      OBS: Por enquanto só estou exibindo a posição e o nome, mas estou pensando ainda se vou exibir todas as informações de uma vez ou se peço para o usuário selecionar o apartamento e após selecionar o apartamento especifico, exibir todas a informações referente ao apartamento.
+
+          def exibir_apartamentos(list):
+            print(f'{"Numero"}{"Apartamento":>20}')
+            print(linha())
+            for pos, dado in enumerate(list):
+                print(f'  {pos + 1:<13}{dado["nome_ap"]:<26}')
+
+    - *excluir_apoartamento*: Recebe como paramêtro uma lista, no momento, não retorna nada.
+ 
+      A função vai apenas excluir o apartamento cadastrado na lista, referente a opção que o usuário digitar.
+ 
+      OBS: Futuramente, vou remover a chamada da função exibir_apartamentos(list) e o input que faço o usuário digitar, quero deixar apenas o for para remover e me retornar a lista atual e passar como parametro a lista + o index do apartamento que vai ser excluido.
+ 
+      
+ 
+          def excluir_apartamento(list):
+            exibir_apartamentos(list)
+            opcao = leiaInt("Digite o número do apartamento que deseja excluir: ")
+            opcao -= 1
+            for pos, dado in enumerate(list):
+                if opcao == pos:
+                    list.pop(opcao)
+                    print(f'Apartamento {dado["nome_ap"]} Removido com sucesso!')
+    
+    - *editar_apartamento_completo*: Recebe como parâmetro uma lista e a posição do index que desejo alterar, o retorno é a subistituição total dos dados de um apartamento dentro da lista.
+ 
+      A função no momento, vai apenas subistituir todos os dados do apartamento que foi passado no parâmetro.
+
+      OBS: No momento, estou pensando sobre a função de Editar todos os dados de um apartamento e editar apenas um dado especifico, eu estava pensando em juntar tudo em uma função, mas acho que vou acabar fazendo outra função para editar o dado manualmente.
+ 
+          def editar_apartamento_completo(list, posicao):
+            dado_ap = dict()
+            dado_ap['nome_ap'] = leiaStr('Digite o nome do apartamento: ')
+            dado_ap['quant_quarto'] = leiaInt('Digite a quantidade de quartos: ')
+            dado_ap['quant_cozinha'] = leiaInt('Digite a quantidade de cozinhas: ')
+            dado_ap['quan_banheiro'] = leiaInt('Digite a quantidade de banheiros: ')
+            dado_ap['quan_cama'] = leiaInt('Digite a quantidade de camas: ')
+            if dado_ap['quan_cama'] > 0:
+                for i in range(dado_ap['quan_cama']):
+                    dado_ap['tipo_cama'] = leiaStr(f'Digite o tipo da {i + 1} cama: ')
+            list[posicao] = dado_ap.copy()
+            print('Apartamento Editado com sucesso!')
+            return list
+
+      OBS: Referente aos nomes de variaveis, planejo fazer algumas mudanças futuramente, para seguir um padrão
+
+
+- 📅 06/09/2025: Foi feito uma mudança em relação a organização dos arquivos, agora vou deixar o projeto separado por pastas, com o nome da versão(version_0X),
   até chegar no produto final. A ideia é ir documentando as mudanças feitas a cada dia durante a criação do projeto e explicar o por que delas também.
 
   A respeito da estrutura do projeto, a ideia inicial que tive no momento, foi a criação dinâmica do menu, já que a forma que posso apresentar a minha solução no momento, vai ser pelo prompt.
@@ -177,7 +306,4 @@
             list.append(dado_ap.copy())
             return list
 
-
-
-
-
+- 📅 05/09/2025: Primeiro commit do projeto, com apenas os arquivos base.
