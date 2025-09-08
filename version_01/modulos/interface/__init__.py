@@ -9,6 +9,7 @@ def cabecalho(txt):
     print(linha())
 
 def exibeMenu(lista,nome='MENU PRINCIPAL'):
+    print()
     cabecalho(nome)
     contador = 1
     for item in lista:
@@ -16,4 +17,5 @@ def exibeMenu(lista,nome='MENU PRINCIPAL'):
         contador += 1
     print(linha())
     opcao = leiaInt(f'Sua Opção: ')
+    print()
     return opcao

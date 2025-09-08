@@ -1,7 +1,7 @@
 from modulos.interface import *
 from modulos.apartment import *
 
-apartamento = list()
+
 
 while True:
     main_menu = exibeMenu(['Apartamento', 'Cliente', 'Sair do sistema'], 'Residencial Costão da Gamboa')
@@ -9,51 +9,51 @@ while True:
         case 1:
 
             while True:
-                print()
                 sub_menu = exibeMenu(['Cadastrar Apartamento ', 'Exibir Apartamentos', 'Editar Apartamento','Excluir Apartamentos', 'Voltar ao menu'],'Menu apartamento')
-                print()
                 match sub_menu:
                     case 1:
                         cabecalho('Cadastro apartamento')
-                        cadastrar_apartamento(apartamento)
+                        cadastrar_apartamento()
                     case 2:
-                        if len(apartamento) > 0:
+                        apartamentos = carregar_apartamentos()
+                        if len(apartamentos) > 0:
                             cabecalho('Lista dos apartamentos')
-                            exibir_apartamentos(apartamento)
+                            exibir_apartamentos()
                             print(linha())
 
                             while True:
-                                posicao = leiaInt('Digite o número do apartamento que deseja ver mais detalhes: ')
-                                posicao -= 1
-                                if posicao < len(apartamento):
+                                pos = leiaInt('Digite o número do apartamento que deseja ver mais detalhes: ')
+                                pos -= 1
+
+                                if pos < len(apartamentos):
                                     print()
-                                    exibir_detalhes_apartamento(apartamento, posicao)
+                                    exibir_detalhes_apartamento(pos)
                                     print(linha())
                                     break
                                 else:
                                     print(linha())
                                     print('Opção inválida!')
+                                    print(linha())
 
                         else:
                             print(linha())
                             print('Não há apartamentos cadastrados no momento para exibir!')
-                    case 3:
-                        if len(apartamento) > 0:
-                            cabecalho('Editar apartamento')
-                            exibir_apartamentos(apartamento)
                             print(linha())
-
+                    case 3:
+                        apartamentos = carregar_apartamentos()
+                        if len(apartamentos) > 0:
+                            cabecalho('Editar apartamento')
+                            exibir_apartamentos()
+                            print(linha())
                             while True:
-                                posicao = leiaInt('Digite o número do apartamento que deseja editar: ')
-                                posicao -= 1
-                                if posicao < len(apartamento):
+                                pos = leiaInt('Digite o número do apartamento que deseja editar: ')
+                                pos -= 1
+                                if pos < len(apartamentos):
                                     while True:
-                                        print()
                                         sub_menu = exibeMenu(['Editar todos os dados do apartamento','Editar um dado especifico do apartamento','Voltar ao menu'],'Editar dados do apartamento')
-                                        print()
                                         if sub_menu == 1:
                                             cabecalho('Dados do apartamento')
-                                            editar_todo_apartamento(apartamento, posicao)
+                                            editar_todo_apartamento(pos)
                                             break
                                         elif sub_menu == 2:
                                              while True:
@@ -61,23 +61,23 @@ while True:
                                                  match sub_menu:
 
                                                      case 1:
-                                                         editar_dado_apartamento(apartamento, posicao, 'nome_ap', 'nome do apartamento')
+                                                         editar_dado_apartamento(pos, 'nome_ap', 'nome do apartamento')
                                                          break
                                                      case 2:
-                                                         editar_dado_apartamento(apartamento, posicao, 'quant_quarto', 'quantidade de quarto')
+                                                         editar_dado_apartamento( pos, 'quant_quarto', 'quantidade de quarto')
                                                          break
                                                      case 3:
-                                                         editar_dado_apartamento(apartamento, posicao, 'quant_cozinha', 'quantidade de cozinha')
+                                                         editar_dado_apartamento( pos, 'quant_cozinha', 'quantidade de cozinha')
                                                          break
                                                      case 4:
-                                                         editar_dado_apartamento(apartamento, posicao, 'quant_banheiro', 'quantidade banheiro')
+                                                         editar_dado_apartamento( pos, 'quant_banheiro', 'quantidade banheiro')
                                                          break
                                                      case 5:
-                                                         editar_dado_apartamento(apartamento, posicao, 'quant_cama', 'quantidade da cama')
+                                                         editar_dado_apartamento( pos, 'quant_cama', 'quantidade da cama')
                                                          break
                                                      case 6:
-                                                         if apartamento[posicao]['quant_cama'] > 0 :
-                                                            editar_dado_apartamento(apartamento, posicao, 'tipo_cama', 'modelo da cama')
+                                                         if apartamentos[pos]['quant_cama'] > 0 :
+                                                            editar_dado_apartamento(pos, 'tipo_cama', 'modelo da cama')
                                                             break
                                                          else:
                                                              print(linha())
@@ -105,10 +105,21 @@ while True:
                             print('Não há apartamentos cadastrados no momento para editar!')
                             print(linha())
                     case 4:
-                        if len(apartamento) > 0:
+                        apartamentos = carregar_apartamentos()
+                        if len(apartamentos) > 0:
                             cabecalho('Excluir apartamentos')
-                            excluir_apartamento(apartamento)
-                            print(linha())
+                            exibir_apartamentos()
+                            while True:
+                                pos = leiaInt('Digite o número do apartamento que deseja editar: ')
+                                pos -= 1
+                                if pos < len(apartamentos):
+                                    excluir_apartamento(pos)
+                                    break
+                                else:
+                                    print(linha())
+                                    print('Opção inválida!')
+                                    print(linha())
+
                         else:
                             print(linha())
                             print('Não há apartamentos cadastrados no momento para excluir!')
