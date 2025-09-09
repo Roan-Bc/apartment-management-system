@@ -7,6 +7,194 @@
 
 ### ✅ Versão 1 (atual)
 
+📅 09/09/2025: Hoje foi feito a criação de algumas funções no módulo customer, assim como algumas funções de validação no módulo tests, vou explicar em mais detalhes no texto abaixo:
+  
+  Referente as novas funções adicionadas no módulo *customer*
+
+- *carregar_clientes* e *salvar_clientes*: Assim como foi feito no módulo de cadastro de apartamentos, como estou querendo salvar minha lista de clientes dentro de um arquivo .json, a lógica para realizar o procedimento é a mesma.
+  
+  *carregar_clientes*: O arquivo definido na constante é aberto no modo leitura. Se o arquivo não existir ou estiver vazio/corrompido, a função retorna uma lista vazia, evitando que o programa quebre. Importante: o arquivo só será criado quando a lista for salva pela primeira vez usando a função
+
+  *salvar_clientes*: A lista de clientes é convertida para JSON e salva no arquivo. Sempre que for necessário modificar a lista, é preciso chamar primeiro carregar_clientes, garantindo que os dados atuais sejam carregados corretamente. Após as alterações, a lista é passada para salvar_clientes, que atualiza o arquivo e mantém os dados sincronizados entre o programa e o arquivo JSON.
+
+     ```python
+        from version_01.modulos.tests import *
+        from version_01.modulos.interface import linha, cabecalho
+        import json
+        
+        CAMINHO_JSON = "dados/lista_clientes.json"
+        
+        def carregar_clientes():
+        
+            try:
+                with open(CAMINHO_JSON, "r", encoding="utf-8") as file:
+                    return json.load(file)
+            except (FileNotFoundError, json.JSONDecodeError):
+                return []
+        
+        
+        def salvar_clientes(lista_clientes):
+        
+            with open(CAMINHO_JSON, "w", encoding="utf-8") as file:
+                json.dump(lista_clientes, file, indent=4, ensure_ascii=False)
+     ```
+- *cadstrar_cliente*: A função não recebe nenhum parâmetro e também não retorna valor.
+
+   A lógica dela é praticamente a mesma utilizada para cadastrar um apartamento: eu inicio a função chamando a função carregar_clientes para converter o conteúdo do arquivo .json em uma variável local chamada lista_clientes. Em seguida, crio um dicionário para armazenar os dados do cliente e, após finalizar o cadastro, salvo a alteração/incremento da lista utilizando a função salvar_clientes.
+
+  Porém, diferente de um apartamento, os dados de um cliente são mais complexos. Minha ideia inicial foi implementar dessa forma, mas durante o desenvolvimento percebi que será necessário realizar diversas validações. Um exemplo é o id_fiscal (no Brasil, conhecido como CPF), que possui 11 dígitos, mas em outros países recebe nomes e formatos diferentes. O mesmo ocorre com informações como número de telefone e e-mail.
+
+  Inicialmente, minha ideia era realizar todas as validações manualmente, mas dependendo do escopo, estou considerando utilizar bibliotecas específicas para auxiliar nesse processo. No momento, estou avaliando se mantenho o projeto com um escopo nacional — focado apenas em validações de dados no Brasil, com verificações simples para usuários de fora — ou se amplio para um escopo internacional, priorizando os países que mais fazem turismo no Brasil.
+
+    ```python
+        def cadastrar_cliente():
+          lista_clientes = carregar_clientes()
+      
+          cliente = dict()
+      
+          cliente['nome'] = leiaStr("Digite o seu nome completo: ")
+          cliente['pais'] = leiaStr("Digite seu pais: ")
+          cliente['estado'] = leiaStr("Digite seu estado: ")
+          cliente['endereco'] = leiaStr("Digite seu endereco: ")
+          cliente['id_fiscal'] = verifica_idFiscal(cliente['pais'])
+          cliente['numero_telefone'] = verifica_Telefone("Digite o seu número de telefone: ")
+          cliente['numero_telefone_emergencia'] = verifica_Telefone("Digite o seu número de telefone de emergência: ")
+          cliente['idade'] = leiaInt("Digite sua idade: ")
+          cliente['email'] = verifica_Email("Digite sua email: ")
+      
+          lista_clientes.append(cliente)
+          salvar_clientes(lista_clientes)
+          print(linha())
+          print('Cliente cadastrado com sucesso!')
+          print(linha())
+    ```
+- *exibir_clientes*: A função não possui parâmetros no escopo e não retorna nenhum valor.
+  
+   A lógica dela é semelhante à função exibir_apartamentos: inicio chamando a função carregar_clientes para converter o conteúdo do arquivo em uma lista, atribuo essa lista à variável local lista_clientes, percorro posição e valor dentro dessa lista e exibo a posição, o nome e o id_fiscal de cada cliente cadastrado.
+
+   Atualmente, estou enfrentando um problema visual: dependendo do tamanho do nome, a saída do print fica desorganizada. No momento, encontrei uma solução temporária que resolve parcialmente, mas ainda pretendo implementar uma forma melhor de exibição futuramente.
+
+     ```python
+      def exibir_clientes():
+        lista_clientes = carregar_clientes()
+        tamanho = (len(lista_clientes[0]['nome'])) + 4
+        print(f'{"Numero":<{tamanho}}{"  Nome":<{tamanho}}{"  ID Fiscal":<{tamanho}}')
+        print(linha())
+        for pos, dado in enumerate(lista_clientes):
+            print(f'  {pos + 1:<{tamanho}}{dado["nome"]:<{tamanho}}{dado["id_fiscal"]:<{tamanho}}')
+     ```
+Novas funções no módulo *tests*:
+
+- *verifica_Email*: A função recebe um e-mail como parâmetro e retorna o e-mail validado.
+
+  Como mencionei em textos anteriores, ainda estou avaliando a melhor forma de lidar com as validações. A forma atual que implementei serve apenas para garantir que o e-mail possua, no máximo, um caractere @ e um ponto (.). Essa abordagem é bem simples e não cobre todos os casos reais, mas para fins de teste nas funções de cadastro e edição de clientes já atende temporariamente.
+    ```python
+    
+       def verifica_Email(email):
+        #Função no momento está incompleta, mas vai servir para fazer os testes minimos dentro das funções.
+        while True:
+            test_email = str(input(email))
+            if "@" in test_email and "." in test_email.split("@")[-1]:
+                return test_email
+            else:
+                print('E-mail inválido, digite novamente!')
+     ```
+  
+- *verifica_Telefone*: A função recebe um número de telefone e retorna o número validado.
+
+     A forma atual que implementei serve apenas para garantir que o telefone possua, no máximo, uma quantidade x de caracteres e que todos sejam dígitos de 0 a 9. Essa abordagem é bem simples e não cobre todos os casos reais, mas, para fins de teste nas funções de cadastro e edição de clientes, já atende temporariamente.
+
+  ```python
+    def verifica_Telefone(telefone):
+      # Função no momento está incompleta, mas vai servir para fazer os testes mínimos dentro das funções.
+      formato = '54111512345678'
+      while True:
+          test_numero = str(input(telefone))
+          if len(test_numero) <= len(formato) and test_numero.isdecimal():
+              return test_numero
+          else:
+              print('Número de telefone inválido, digite novamente!')
+    ```
+
+  
+- *verifica_idFiscal*: A função recebe como parâmetro o nome de um país. Caso não seja informado, por padrão é atribuído o valor Brasil. Ela retorna o id_fiscal referente ao país informado.
+
+   De forma simplificada, a função verifica o nome do país passado como parâmetro e, se ele estiver em um dos cases, executa uma segunda função responsável por validar o id_fiscal.
+  
+  OBS: No momento, apenas o case do Brasil está implementado.
+
+  ```python
+    def verifica_idFiscal(pais='Brasil'):
+
+      match pais:
+  
+          case 'Brasil':
+              id = 'CPF'
+              doc = verificaDoc(id)
+              return doc
+          case 'Argentina':
+              id = 'CUIT'
+          case 'Uruguai':
+              id = 'RUT'
+          case 'Paraguai':
+              id = 'RUC'
+          case 'Chile':
+              id = 'RUT '
+          case 'Estados Unidos':
+              id = 'SSN'
+          case 'Alemanha':
+              id ='IdNr'
+          case 'Reino Unido':
+              id = 'NIN'
+          case 'França':
+              id = 'NFR'
+          case 'Itália':
+              id = 'CF'
+
+    ```
+
+  
+- *verificaDoc*: A função recebe como parâmetro um id e retorna o id_fiscal validado para a função verifica_idFiscal.
+
+  Resumidamente, essa função verifica qual case corresponde ao id informado. Caso encontre, entra em um loop pedindo ao usuário que digite o id_fiscal no formato esperado. Se o valor informado for válido, a função retorna o id_fiscal para a função verifica_idFiscal. Caso contrário, o usuário permanece no loop até fornecer um dado válido.
+
+  OBS: Essa validação ainda não está 100% correta, pois não é possível verificar se o CPF realmente existe ou a quem está associado. No entanto, para fins de implementação das funções de cadastro e edição de clientes, essa abordagem já atende temporariamente.
+
+  ```python
+  def verificaDoc(id):
+    match id:
+
+        case 'CPF':
+            formato = '00000000000'
+            while True:
+               doc = str(input(f'Digite seu {id} nesse formato "{formato}": '))
+               if doc.isdecimal() and len(doc) == len(formato):
+                   return doc
+               else:
+                    print(f'{id} inválido, por favor, digite novamente!')
+
+
+    """
+        case 'CUIT':
+
+        case 'RUT':
+
+        case 'RUC':
+
+        case 'RUT ':
+
+        case 'SSN':
+
+        case 'IdNr':
+
+        case 'NIN':
+
+        case 'NFR':
+
+        case 'CF':
+    """
+    ```
+
 📅 08/09/2025: Hoje teve bastante mudança no projeto, então vou explicar por partes o que foi desenvolvido até agora.
 
   ⏰ Do período das 17:00 até as 20:00, estava pensando se terminava as funções do módulo de clientes, mas acabei querendo implementar alguma forma de salvar as minhas listas em algum documento, para ficar mais fácil de fazer testes e deixar o programa mais "completo". Então, precisei pesquisar a respeito de como fazer e fiquei entre três tipos de arquivo para armazenar as listas: TXT, CSV e JSON.
