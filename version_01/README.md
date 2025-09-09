@@ -56,6 +56,281 @@
                 with open(CAMINHO_JSON, "w", encoding="utf-8") as file:
                     json.dump(lista_apartamentos, file, indent=4, ensure_ascii=False)
     ```
+  - *cadastrar_apartamento*: Como explicado acima, devido às novas funções que permitem salvar todo o progresso da lista no arquivo .json, houve uma mudança na estrutura da função.
+
+    Agora, ela não recebe mais parâmetros e funciona da seguinte forma: a função é iniciada com a variável local lista_apartamentos, que recebe a conversão do arquivo .json para lista. Em seguida, é realizado o cadastro de um novo apartamento, e essa alteração é salva usando a função salvar_apartamentos(lista_apartamentos).
+
+    OBS: Como precisei alterar bastante código, percebi que estava começando a ter problemas com o nome de parâmetros e variáveis que estava usando, como lista e key. Por isso, acabei trocando-os para evitar que o Python associasse esses nomes a tipos internos, como list ou key.
+      ```python
+            def cadastrar_apartamento():
+              lista_apartamentos = carregar_apartamentos()
+          
+              dado_ap = dict()
+              dado_ap['nome_ap'] = leiaStr('Digite o nome do apartamento: ')
+              dado_ap['quant_quarto'] = leiaInt('Digite a quantidade de quartos: ')
+              dado_ap['quant_cozinha'] = leiaInt('Digite a quantidade de cozinhas: ')
+              dado_ap['quant_banheiro'] = leiaInt('Digite a quantidade de banheiros: ')
+              dado_ap['quant_cama'] = leiaInt('Digite a quantidade de camas: ')
+          
+              if dado_ap['quant_cama'] > 0:
+                  tipos = []
+                  for i in range(dado_ap['quant_cama']):
+                      tipos.append(leiaStr(f'Digite o modelo da {i + 1}ª cama: '))
+                  dado_ap['tipo_cama'] = tipos
+          
+              lista_apartamentos.append(dado_ap)
+              salvar_apartamentos(lista_apartamentos)
+              print(linha())
+              print('Apartamento cadastrado com sucesso!')
+              print(linha())
+       ```
+      
+- *exibir_apartamentos*: A mudança realizada nessa função foi que agora ela não recebe nenhum parâmetro. É necessário chamar a função carregar_apartamentos para salvar a lista de apartamentos em uma variável local e, em seguida, exibir a lista de apartamentos cadastrados usando essa variável.
+
+    ```python
+      def exibir_apartamentos():
+        lista_apartamentos = carregar_apartamentos()
+    
+        print(f'{"Numero"}{"Apartamento":>20}')
+        print(linha())
+        for pos, dado in enumerate(lista_apartamentos):
+            print(f'  {pos + 1:<13}{dado["nome_ap"]:<26}')
+     ```
+- *exibir_detalhes_apartamento*: A mudança realizada nessa função foi que agora ela recebe apenas a posição como parâmetro. Também é necessário chamar a função carregar_apartamentos para salvar a lista de apartamentos em uma variável local e exibir a lista de apartamentos cadastrados usando essa variável.
+    ```python
+      def exibir_detalhes_apartamento(pos):
+        lista_apartamentos = carregar_apartamentos()
+        dado = lista_apartamentos[pos]
+        tamanho = (len(dado['nome_ap'])) + 4
+        if dado['quant_cama'] > 0:
+            tipos = ', '.join(dado["tipo_cama"])
+  
+        print(linha())
+        print(f'{dado["nome_ap"]:<{tamanho}} {dado["quant_quarto"]:<7} {dado["quant_cozinha"]:<7} {dado["quant_banheiro"]:<7} {dado["quant_cama"]:<7} {tipos:<7}')
+     ```
+- *excluir_apartamento*: Houve várias mudanças nessa função. Uma delas foi remover a validação interna da posição do apartamento. Antes, a função recebia a lista como parâmetro e pedia para o usuário informar a posição do apartamento que desejava excluir. Agora, o usuário deve digitar a posição antes de chamar a função; em seguida, é verificado se essa posição realmente existe, e ela é passada como parâmetro para a função, que então realiza a exclusão do apartamento.
+
+    Além dessa mudança, houve outra alteração padrão: a função agora chama carregar_apartamentos e salva o resultado em uma variável local (lista_apartamentos = carregar_apartamentos()). Em seguida, a exclusão do apartamento é realizada usando o parâmetro passado, e a lista modificada é salva novamente chamando salvar_apartamentos(lista_apartamentos).
+
+     ```python
+      def excluir_apartamento(pos):
+        lista_apartamentos = carregar_apartamentos()
+        print(linha())
+        print(f'Apartamento {lista_apartamentos[pos]["nome_ap"]} Removido com sucesso!')
+        print(linha())
+        lista_apartamentos.pop(pos)
+        salvar_apartamentos(lista_apartamentos)
+     ```
+- *editar_todo_apartamento*: As mudanças realizadas nessa função foram, basicamente, a implementação das funções carregar_apartamentos e salvar_apartamentos, a alteração para que o parâmetro seja apenas a posição do apartamento e a modificação de nomes de algumas variáveis, como dado_ap, que passou a se chamar apartamento.
+
+     ```python
+
+      def editar_todo_apartamento(posicao):
+        lista_apartamentos = carregar_apartamentos()
+        apartamento = dict()
+        apartamento['nome_ap'] = leiaStr('Digite o nome do apartamento: ')
+        apartamento['quant_quarto'] = leiaInt('Digite a quantidade de quartos: ')
+        apartamento['quant_cozinha'] = leiaInt('Digite a quantidade de cozinhas: ')
+        apartamento['quant_banheiro'] = leiaInt('Digite a quantidade de banheiros: ')
+        apartamento['quant_cama'] = leiaInt('Digite a quantidade de camas: ')
+    
+        if apartamento['quant_cama'] > 0:
+            tipos = []
+            for i in range(apartamento['quant_cama']):
+                tipos.append(leiaStr(f'Digite o modelo da {i + 1}° cama: '))
+            apartamento['tipo_cama'] = tipos[:]
+    
+        lista_apartamentos[posicao] = apartamento.copy()
+        print(linha())
+        print('Apartamento Editado com sucesso!')
+        print(linha())
+        salvar_apartamentos(lista_apartamentos)
+     ```
+- *editar_dado_apartamento*: As mudanças realizadas nessa função foram, basicamente, a implementação das funções carregar_apartamentos e salvar_apartamentos, a remoção da lista como parâmetro da função e a alteração do nome da variável e do parâmetro key para chave.
+
+    ```python
+        def editar_dado_apartamento(pos, chave, txt):
+          lista_apartamentos = carregar_apartamentos()
+          if chave == 'quant_cama':
+              lista_apartamentos[pos][chave] = leiaInt('Digite a quantidade de camas: ')
+              if lista_apartamentos[pos][chave] > 0:
+                  tipos = []
+                  for i in range(lista_apartamentos[pos][chave]):
+                      tipos.append(leiaStr(f'Digite o modelo da {i + 1}° cama: '))
+                  lista_apartamentos[pos]['tipo_cama'] = tipos[:]
+      
+          elif chave == 'tipo_cama':
+              tipos = []
+              for i in range (lista_apartamentos[pos]['quant_cama']):
+                  tipos.append(leiaStr(f'Digite o modelo da {i + 1}° cama: '))
+              lista_apartamentos[pos][chave] = tipos[:]
+      
+          elif chave == 'nome_ap':
+              lista_apartamentos[pos][chave] = leiaStr(f'Digite o {txt}: ')
+          else:
+              lista_apartamentos[pos][chave] = leiaInt(f'Digite a {txt}: ')
+      
+          print(linha())
+          print('Apartamento editado com sucesso!')
+          print(linha())
+          salvar_apartamentos(lista_apartamentos)
+     ```
+- *index*: As mudanças realizadas no arquivo principal foram a remoção da variável global apartamento = list(). Como eu utilizava essa variável para verificar o tamanho da lista, foi necessário declarar a variável em alguns trechos do menu, atribuindo a ela o retorno da função carregar_apartamentos() para poder realizar a verificação usando len(). Além disso, foi adicionada uma validação da posição do apartamento antes de chamar a função excluir_apartamento.
+  
+    ```python
+    
+          from modulos.interface import *
+          from modulos.apartment import *
+    
+          while True:
+              main_menu = exibeMenu(['Apartamento', 'Cliente', 'Sair do sistema'], 'Residencial Costão da Gamboa')
+              match main_menu:
+                  case 1:
+          
+                      while True:
+                          sub_menu = exibeMenu(['Cadastrar Apartamento ', 'Exibir Apartamentos', 'Editar Apartamento','Excluir Apartamentos', 'Voltar ao menu'],'Menu apartamento')
+                          match sub_menu:
+                              case 1:
+                                  cabecalho('Cadastro apartamento')
+                                  cadastrar_apartamento()
+                              case 2:
+                                  apartamentos = carregar_apartamentos()
+                                  if len(apartamentos) > 0:
+                                      cabecalho('Lista dos apartamentos')
+                                      exibir_apartamentos()
+                                      print(linha())
+          
+                                      while True:
+                                          pos = leiaInt('Digite o número do apartamento que deseja ver mais detalhes: ')
+                                          pos -= 1
+          
+                                          if pos < len(apartamentos):
+                                              print()
+                                              exibir_detalhes_apartamento(pos)
+                                              print(linha())
+                                              break
+                                          else:
+                                              print(linha())
+                                              print('Opção inválida!')
+                                              print(linha())
+          
+                                  else:
+                                      print(linha())
+                                      print('Não há apartamentos cadastrados no momento para exibir!')
+                                      print(linha())
+                              case 3:
+                                  apartamentos = carregar_apartamentos()
+                                  if len(apartamentos) > 0:
+                                      cabecalho('Editar apartamento')
+                                      exibir_apartamentos()
+                                      print(linha())
+                                      while True:
+                                          pos = leiaInt('Digite o número do apartamento que deseja editar: ')
+                                          pos -= 1
+                                          if pos < len(apartamentos):
+                                              while True:
+                                                  sub_menu = exibeMenu(['Editar todos os dados do apartamento','Editar um dado especifico do apartamento','Voltar ao menu'],'Editar dados do apartamento')
+                                                  if sub_menu == 1:
+                                                      cabecalho('Dados do apartamento')
+                                                      editar_todo_apartamento(pos)
+                                                      break
+                                                  elif sub_menu == 2:
+                                                       while True:
+                                                           sub_menu = exibeMenu(['Nome','Quantidade Quarto','Quantidade Cozinha', 'Quantidade Banheiro', 'Quantidade Cama', 'Modelo da cama'], 'Dados do apartamento')
+                                                           match sub_menu:
+          
+                                                               case 1:
+                                                                   editar_dado_apartamento(pos, 'nome_ap', 'nome do apartamento')
+                                                                   break
+                                                               case 2:
+                                                                   editar_dado_apartamento( pos, 'quant_quarto', 'quantidade de quarto')
+                                                                   break
+                                                               case 3:
+                                                                   editar_dado_apartamento( pos, 'quant_cozinha', 'quantidade de cozinha')
+                                                                   break
+                                                               case 4:
+                                                                   editar_dado_apartamento( pos, 'quant_banheiro', 'quantidade banheiro')
+                                                                   break
+                                                               case 5:
+                                                                   editar_dado_apartamento( pos, 'quant_cama', 'quantidade da cama')
+                                                                   break
+                                                               case 6:
+                                                                   if apartamentos[pos]['quant_cama'] > 0 :
+                                                                      editar_dado_apartamento(pos, 'tipo_cama', 'modelo da cama')
+                                                                      break
+                                                                   else:
+                                                                       print(linha())
+                                                                       print('Como não há uma quantidade de camas cadastradas, não é possivel fazer a alteração do modelo da cama!')
+                                                                       print(linha())
+                                                               case _:
+                                                                   print(linha())
+                                                                   print('Opção Inválida!')
+                                                                   print(linha())
+          
+                                                       break
+                                                  elif sub_menu == 3:
+                                                       break
+                                                  else:
+                                                       print(linha())
+                                                       print('Opção inválida!')
+                                                       print(linha())
+                                              break
+                                          else:
+                                              print(linha())
+                                              print('Opção inválida!')
+                                              print(linha())
+                                  else:
+                                      print(linha())
+                                      print('Não há apartamentos cadastrados no momento para editar!')
+                                      print(linha())
+                              case 4:
+                                  apartamentos = carregar_apartamentos()
+                                  if len(apartamentos) > 0:
+                                      cabecalho('Excluir apartamentos')
+                                      exibir_apartamentos()
+                                      while True:
+                                          pos = leiaInt('Digite o número do apartamento que deseja editar: ')
+                                          pos -= 1
+                                          if pos < len(apartamentos):
+                                              excluir_apartamento(pos)
+                                              break
+                                          else:
+                                              print(linha())
+                                              print('Opção inválida!')
+                                              print(linha())
+          
+                                  else:
+                                      print(linha())
+                                      print('Não há apartamentos cadastrados no momento para excluir!')
+                                      print(linha())
+                              case 5:
+                                  break
+                              case _:
+                                  print(linha())
+                                  print('Opção inválida!')
+                                  print(linha())
+                  case 2:
+          
+                      while True:
+                          sub_menu = exibeMenu(['Cadastrar Cliente ', 'Exibir Cliente', 'Excluir Cliente', 'Voltar ao menu'])
+                          match sub_menu:
+                              case 1:
+                                  print('Cadastrar Cliente')
+                              case 2:
+                                  print('Exibir clientes')
+                              case 3:
+                                  print('Excluir cliente')
+                              case 4:
+                                  break
+                              case _:
+                                  print('Opção inválida!')
+                  case 3:
+                      linha()
+                      print('Saindo do sistema...')
+                      break
+                  case _:
+                      print('Opção inválida!')
+    ```                                    
    --- 
  ⏰ Do período das 09:00 até as 16:00, finalizei as funções restantes, ajustei algumas já existentes e modifiquei o arquivo index e o módulo de interface para melhorar o espaçamento entre os menus.
 
