@@ -1,7 +1,6 @@
 from modulos.interface import *
 from modulos.apartment import *
-
-
+from modulos.customer import *
 
 while True:
     main_menu = exibeMenu(['Apartamento', 'Cliente', 'Sair do sistema'], 'Residencial Costão da Gamboa')
@@ -133,15 +132,19 @@ while True:
         case 2:
 
             while True:
-                sub_menu = exibeMenu(['Cadastrar Cliente ', 'Exibir Cliente', 'Excluir Cliente', 'Voltar ao menu'])
+                sub_menu = exibeMenu(['Cadastrar Cliente ', 'Exibir Cliente', 'Editar Cliente','Excluir Cliente', 'Voltar ao menu'])
                 match sub_menu:
                     case 1:
-                        print('Cadastrar Cliente')
+                        cabecalho('Cadastrar Cliente')
+                        cadastrar_cliente()
                     case 2:
-                        print('Exibir clientes')
+                        cabecalho('Exibir clientes')
+                        exibir_clientes()
                     case 3:
-                        print('Excluir cliente')
+                        print('Editar Cliente')
                     case 4:
+                        print('Excluir cliente')
+                    case 5:
                         break
                     case _:
                         print('Opção inválida!')

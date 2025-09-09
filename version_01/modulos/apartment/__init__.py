@@ -2,7 +2,7 @@ from version_01.modulos.tests import leiaInt, leiaStr
 from version_01.modulos.interface import linha, cabecalho
 import json
 
-CAMINHO_JSON = "dados/cadastro.json"
+CAMINHO_JSON = "dados/lista_apartamentos.json"
 
 def carregar_apartamentos():
 
@@ -17,7 +17,6 @@ def salvar_apartamentos(lista_apartamentos):
 
     with open(CAMINHO_JSON, "w", encoding="utf-8") as file:
         json.dump(lista_apartamentos, file, indent=4, ensure_ascii=False)
-
 
 
 def cadastrar_apartamento():
