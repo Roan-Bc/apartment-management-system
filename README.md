@@ -43,7 +43,58 @@ O projeto será desenvolvido em versões, cada uma aplicando novos conhecimentos
 - [🎥Curso Python Mundo 03](https://www.youtube.com/watch?v=0LB3FSfjvao&list=PLHz_AreHm4dksnH2jVTIVNviIMBVYyFnH) ✅
 - [🎥CS50P](https://www.youtube.com/watch?v=fD5DqlO2dyQ&list=PLRqGANMTmslTGsfYUqvklm7ZAyv36FRAv&index=7&ab_channel=estude.org) 🔄
 
+---
 
+## 🚀 Como executar o projeto
+
+1️⃣ Pré-requisitos
+
+- Ter o Python 3.8+ instalado (download aqui
+)
+
+- Um terminal ou prompt de comando para executar os arquivos .py
+
+2️⃣ Clonar o repositório
+
+- No terminal, digite:
+
+      git clone https://github.com/Roan-Bc/apartment-management-system.git
+      cd apartment-management-system
+
+3️⃣ (Opcional) Criar um ambiente virtual
+
+ - É recomendado criar um ambiente virtual para manter dependências isoladas:
+
+       python -m venv venv
+
+- Ative o ambiente virtual:
+
+  Windows:
+    
+      venv\Scripts\activate
+    
+    
+   Mac/Linux:
+    
+      source venv/bin/activate
+
+4️⃣ Instalar dependências
+
+- Atualmente, o projeto não possui bibliotecas externas obrigatórias, mas se futuramente você usar alguma, basta criar um requirements.txt e executar:
+
+      pip install -r requirements.txt
+
+5️⃣ Executar o sistema
+
+ - Dentro da pasta do projeto, execute o arquivo principal:
+
+        python version_01/index.py
+
+   O menu do sistema será exibido no terminal, permitindo cadastrar, editar, excluir e visualizar apartamentos e clientes.
+
+6️⃣ Persistência de dados
+
+ - Os dados de apartamentos e clientes são salvos em arquivos .json dentro da pasta dados/. Sempre que você executar o sistema, os arquivos serão carregados e atualizados automaticamente.
 ---
 ## 🤝 Contribuições
 
