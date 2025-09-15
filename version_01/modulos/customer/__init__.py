@@ -43,8 +43,26 @@ def cadastrar_cliente():
 
 def exibir_clientes():
     lista_clientes = carregar_clientes()
-    tamanho = (len(lista_clientes[0]['nome'])) + 4
+
+    tamanho = len(lista_clientes[0]['nome'])
+    for nome in lista_clientes:
+        if len(nome['nome']) >= tamanho:
+            tamanho = len(nome['nome']) + 4
+
     print(f'{"Numero":<{tamanho}}{"  Nome":<{tamanho}}{"  ID Fiscal":<{tamanho}}')
     print(linha())
     for pos, dado in enumerate(lista_clientes):
-        print(f'  {pos + 1:<{tamanho}}{dado["nome"]:<{tamanho}}{dado["id_fiscal"]:<{tamanho}}')
+        id = ': '.join(lista_clientes[pos]["id_fiscal"])
+        print(f'  {pos + 1:<{tamanho}}{dado["nome"]:<{tamanho}}{id:<{tamanho}}')
+
+
+def exibir_detalhes_cliente(pos):
+    lista_clientes = carregar_clientes()
+    cliente = lista_clientes[pos]
+    for chave, valor in cliente.items():
+        if chave != 'id_fiscal':
+            print(f'{chave}: {valor}')
+        else:
+            id = ': '.join(valor)
+            print(id)
+

@@ -1,10 +1,13 @@
 [
     {
-        "nome": "Roan Bittencourt de Carvalho",
+        "nome": "Jorge",
         "pais": "Brasil",
         "estado": "Santa Catarina",
         "endereco": "Estrada Geral da Praia da Gamboa",
-        "id_fiscal": "03115968711",
+        "id_fiscal": [
+            "CPF",
+            "03115968711"
+        ],
         "numero_telefone": 48999591986,
         "numero_telefone_emergencia": 48999591986,
         "idade": 24,
@@ -15,10 +18,27 @@
         "pais": "Brasil",
         "estado": "Santa Catarina",
         "endereco": "Estrada Geral da Praia da Gamboa",
-        "id_fiscal": "03141958670",
+        "id_fiscal": [
+            "CPF",
+            "03141958670"
+        ],
         "numero_telefone": "5548999591986",
         "numero_telefone_emergencia": "5548999591986",
         "idade": 32,
+        "email": "roanbcbcbc@gmail.com"
+    },
+    {
+        "nome": "Roan Bittencourt de Carvalho",
+        "pais": "Brasil",
+        "estado": "Santa Catarina",
+        "endereco": "Estrada Geral da Praia da Gamboa",
+        "id_fiscal": [
+            "CPF",
+            "07122937921"
+        ],
+        "numero_telefone": "4832531248",
+        "numero_telefone_emergencia": "4832531248",
+        "idade": 24,
         "email": "roanbcbcbc@gmail.com"
     }
 ]

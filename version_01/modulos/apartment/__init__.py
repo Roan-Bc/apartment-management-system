@@ -76,9 +76,7 @@ def excluir_apartamento(pos):
 
 
 
-
-
-def editar_todo_apartamento(posicao):
+def editar_todo_apartamento(pos):
     lista_apartamentos = carregar_apartamentos()
     apartamento = dict()
     apartamento['nome_ap'] = leiaStr('Digite o nome do apartamento: ')
@@ -93,11 +91,12 @@ def editar_todo_apartamento(posicao):
             tipos.append(leiaStr(f'Digite o modelo da {i + 1}° cama: '))
         apartamento['tipo_cama'] = tipos[:]
 
-    lista_apartamentos[posicao] = apartamento.copy()
+    lista_apartamentos[pos] = apartamento.copy()
+    salvar_apartamentos(lista_apartamentos)
+
     print(linha())
     print('Apartamento Editado com sucesso!')
     print(linha())
-    salvar_apartamentos(lista_apartamentos)
 
 def editar_dado_apartamento(pos, chave, txt):
     lista_apartamentos = carregar_apartamentos()

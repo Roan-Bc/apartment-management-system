@@ -53,7 +53,7 @@ def verifica_idFiscal(pais='Brasil'):
         case 'Brasil':
             id = 'CPF'
             doc = verificaDoc(id)
-            return doc
+            return [id, doc]
         case 'Argentina':
             id = 'CUIT'
         case 'Uruguai':

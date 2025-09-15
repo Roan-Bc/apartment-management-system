@@ -24,7 +24,7 @@ while True:
                                 pos = leiaInt('Digite o número do apartamento que deseja ver mais detalhes: ')
                                 pos -= 1
 
-                                if pos < len(apartamentos):
+                                if 0 <= pos < len(apartamentos):
                                     print()
                                     exibir_detalhes_apartamento(pos)
                                     print(linha())
@@ -47,7 +47,7 @@ while True:
                             while True:
                                 pos = leiaInt('Digite o número do apartamento que deseja editar: ')
                                 pos -= 1
-                                if pos < len(apartamentos):
+                                if 0 <= pos < len(apartamentos):
                                     while True:
                                         sub_menu = exibeMenu(['Editar todos os dados do apartamento','Editar um dado especifico do apartamento','Voltar ao menu'],'Editar dados do apartamento')
                                         if sub_menu == 1:
@@ -111,7 +111,7 @@ while True:
                             while True:
                                 pos = leiaInt('Digite o número do apartamento que deseja editar: ')
                                 pos -= 1
-                                if pos < len(apartamentos):
+                                if 0 <= pos < len(apartamentos):
                                     excluir_apartamento(pos)
                                     break
                                 else:
@@ -138,8 +138,26 @@ while True:
                         cabecalho('Cadastrar Cliente')
                         cadastrar_cliente()
                     case 2:
-                        cabecalho('Exibir clientes')
-                        exibir_clientes()
+                        clientes = carregar_apartamentos()
+                        if len(clientes) > 0:
+                            cabecalho('Exibir clientes')
+                            exibir_clientes()
+
+                            while True:
+                                if len(clientes) > 0:
+                                    pos = leiaInt('Digite o número do cliente que deseja visualizar mais detalhes: ')
+                                    pos -= 1
+                                    if 0 <= pos < len(clientes):
+                                        cabecalho('Exibir Detalhes cliente')
+                                        exibir_detalhes_cliente(pos)
+                                        print(linha())
+                                        break
+                                else:
+                                    print('Número inválido, digite novamente!')
+
+                        else:
+                            print('Não há clientes cadastrados no momento para exibir!')
+
                     case 3:
                         print('Editar Cliente')
                     case 4:
