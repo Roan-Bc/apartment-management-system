@@ -110,7 +110,7 @@ while True:
                             cabecalho('Excluir apartamentos')
                             exibir_apartamentos()
                             while True:
-                                pos = leiaInt('Digite o número do apartamento que deseja editar: ')
+                                pos = leiaInt('Digite o número do apartamento que deseja excluir: ')
                                 pos -= 1
                                 if 0 <= pos < len(apartamentos):
                                     excluir_apartamento(pos)
@@ -231,7 +231,7 @@ while True:
                             cabecalho('Excluir Cliente')
                             exibir_clientes()
                             while True:
-                                pos = leiaInt('Digite o número do cliente que deseja editar: ')
+                                pos = leiaInt('Digite o número do cliente que deseja excluir: ')
                                 pos -= 1
                                 if 0 <= pos < len(clientes):
                                     excluir_cliente(pos)
@@ -258,22 +258,172 @@ while True:
                         cabecalho('Cadastrar reserva')
                         cadastrar_reserva()
                     case 2:
-                        clientes = carregar_clientes()
-                        if len(clientes) > 0:
-                            cabecalho('Exibir reservas')
-                            exibir_reservas()
+                        reserva = carregar_reservas()
+                        if len(reserva) > 0:
+                            while True:
+                                sub_menu = exibeMenu(['Exibir todas reservas ', 'Exibir todas reservas de um apartamento', 'Exibir todas reserva de um cliente','Voltar ao menu'], 'Reservas')
+                                match sub_menu:
+
+                                    case 1:
+                                        cabecalho('Exibir reservas')
+                                        exibir_reservas()
+                                        while True:
+                                            pos = leiaInt('Digite o número da reserva que deseja ver mais detalhes: ')
+                                            pos -= 1
+
+                                            if 0 <= pos < len(reserva):
+                                                print()
+                                                cabecalho('Detalhes da reserva')
+                                                exibir_detalhes_reserva(pos)
+                                                print(linha())
+                                                break
+                                            else:
+                                                print(linha())
+                                                print('Opção inválida!')
+                                                print(linha())
+                                    case 2:
+                                        nome = nome_apartamentos()
+                                        cabecalho('Exibir reservas de um apartamento')
+                                        exibir_reservas_nomeApartamento(nome)
+                                        while True:
+                                            pos = leiaInt('Digite o número da reserva que deseja ver mais detalhes: ')
+                                            pos -= 1
+
+                                            if 0 <= pos < len(reserva):
+                                                print()
+                                                cabecalho('Detalhes da reserva')
+                                                exibir_detalhes_reserva(pos)
+                                                print(linha())
+                                                break
+                                            else:
+                                                print(linha())
+                                                print('Opção inválida!')
+                                                print(linha())
+                                    case 3:
+                                        nome = nome_clientes()
+                                        cabecalho('Exibir reservas de um cliente')
+                                        exibir_reservas_nomeCliente(nome)
+                                        while True:
+                                            pos = leiaInt('Digite o número da reserva que deseja ver mais detalhes: ')
+                                            pos -= 1
+
+                                            if 0 <= pos < len(reserva):
+                                                print()
+                                                cabecalho('Detalhes da reserva')
+                                                exibir_detalhes_reserva(pos)
+                                                print(linha())
+                                                break
+                                            else:
+                                                print(linha())
+                                                print('Opção inválida!')
+                                                print(linha())
+                                    case 4:
+                                        break
+                                    case _:
+                                        print('Opção inválida!')
                         else:
                             print('Não há reservas cadastradas no momento disponiveis para exibir!')
                     case 3:
-                        print('Editar Reserva')
+                        reserva = carregar_reservas()
+                        if len(reserva) > 0:
+                            cabecalho('Editar Reserva')
+                            exibir_reservas()
+                            print(linha())
+                            while True:
+                                pos = leiaInt('Digite o número da Reserva que deseja editar: ')
+                                pos -= 1
+                                if 0 <= pos < len(reserva):
+                                    while True:
+                                        sub_menu = exibeMenu(['Editar todos os dados da reserva', 'Editar um dado especifico da reserva','Voltar ao menu'], 'Editar dados da Reserva')
+                                        if sub_menu == 1:
+                                            cabecalho('Dados da reserva')
+                                            editar_toda_reserva(pos)
+                                            break
+                                        elif sub_menu == 2:
+                                            while True:
+                                                sub_menu = exibeMenu(['nome apartamento', 'nome cliente', 'plataforma', 'forma de pagamento', 'valor','check-in', 'check-out', 'quantidade hospedes', 'quantidade animais','observação','voltar ao menu'], 'Dados da reserva')
+                                                match sub_menu:
+
+                                                    case 1:
+                                                        editar_dado_reserva(pos, 'nome_apartamento')
+                                                        break
+                                                    case 2:
+                                                        editar_dado_reserva(pos, 'nome_cliente')
+                                                        break
+                                                    case 3:
+                                                        editar_dado_reserva(pos, 'plataforma')
+                                                        break
+                                                    case 4:
+                                                        if reserva[pos]['plataforma'].lower == 'whatsapp':
+                                                            editar_dado_reserva(pos, 'forma_de_pagamento')
+                                                            break
+                                                        else:
+                                                            print('Não é possivel editar a forma de pagamento se a plataforma de reserva não for whatsapp!')
+                                                    case 5:
+                                                        editar_dado_reserva(pos, 'valor')
+                                                        break
+                                                    case 6:
+                                                        editar_dado_reserva(pos, 'check-in')
+                                                        break
+                                                    case 7:
+                                                        editar_dado_reserva(pos, 'check-out')
+                                                        break
+                                                    case 8:
+                                                        editar_dado_reserva(pos, 'quantidade_de_hospede')
+                                                        break
+                                                    case 9:
+                                                        editar_dado_reserva(pos, 'quantidade_de_animais')
+                                                        break
+                                                    case 10:
+                                                        editar_dado_reserva(pos, 'observacao')
+                                                        break
+                                                    case 11:
+                                                        break
+                                                    case _:
+                                                        print(linha())
+                                                        print('Opção Inválida!')
+                                                        print(linha())
+                                            break
+                                        elif sub_menu == 3:
+                                            break
+                                        else:
+                                            print(linha())
+                                            print('Opção inválida!')
+                                            print(linha())
+                                    break
+                                else:
+                                    print(linha())
+                                    print('Opção inválida!')
+                                    print(linha())
+                        else:
+                            print(linha())
+                            print('Não há Reservas cadastrados no momento para editar!')
+                            print(linha())
                     case 4:
-                        print('Excluir reserva')
+                        reserva = carregar_reservas()
+                        if len(reserva) > 0:
+                            cabecalho('Excluir Reserva')
+                            exibir_reservas()
+                            while True:
+                                pos = leiaInt('Digite o número da reserva que deseja excluir: ')
+                                pos -= 1
+                                if 0 <= pos < len(reserva):
+                                    excluir_reserva(pos)
+                                    break
+                                else:
+                                    print(linha())
+                                    print('Opção inválida!')
+                                    print(linha())
+
+                        else:
+                            print(linha())
+                            print('Não há reservas cadastradas no momento para excluir!')
+                            print(linha())
                     case 5:
                         break
                     case _:
                         print('Opção inválida')
         case 4:
-            linha()
             print('Saindo do sistema...')
             break
         case _:

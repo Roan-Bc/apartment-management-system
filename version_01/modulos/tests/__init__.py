@@ -116,3 +116,13 @@ def verificaData(txt):
             return data
         else:
             print("Data inválida, digite novamente!")
+
+def verificaTexto(txt):
+    caracteres_invalidos = r"""!@#$%^&*()+=[]{}|\/:;"'<>?`~"""
+    while True:
+        vT = str(input(txt))
+
+        if not any(c in caracteres_invalidos for c in vT):
+            return vT
+        else:
+            print(f'Possui um simbolo inválido no texto, digite novamente!')

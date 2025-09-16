@@ -1,36 +1,12 @@
 [
     {
-        "nome_ap": "teste22",
-        "quant_quarto": 1,
-        "quant_cozinha": 1,
-        "quant_banheiro": 1,
-        "quant_cama": 0
-    },
-    {
-        "nome_ap": "teste2",
-        "quant_quarto": 1,
-        "quant_cozinha": 1,
-        "quant_banheiro": 1,
-        "quant_cama": 0
-    },
-    {
-        "nome_ap": "teste 4",
-        "quant_quarto": 1,
+        "nome_ap": "Apartamento 2",
+        "quant_quarto": 2,
         "quant_cozinha": 1,
         "quant_banheiro": 1,
         "quant_cama": 1,
         "tipo_cama": [
-            "teste"
-        ]
-    },
-    {
-        "nome_ap": "teste",
-        "quant_quarto": 1,
-        "quant_cozinha": 1,
-        "quant_banheiro": 1,
-        "quant_cama": 1,
-        "tipo_cama": [
-            "teste2"
+            "Casal"
         ]
     }
 ]

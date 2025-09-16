@@ -1,12 +1,15 @@
 [
     {
-        "nome_apartamento": "teste 4",
-        "nome_cliente": "Teste",
-        "plataforma": "Airbnb",
-        "valor": 100,
+        "nome_apartamento": "Apartamento 2",
+        "nome_cliente": "Carlos",
+        "plataforma": "Whatsapp",
+        "forma_de_pagamento": "pix",
+        "valor": 300,
         "check-in": "16/09/2025",
-        "check-out": "17/09/2025",
-        "quant_hospedes": 2,
-        "quant_animais": 0
+        "check-out": "19/09/2025",
+        "quantidade_diarias": 3,
+        "quantidade_hospedes": 2,
+        "quantidade_animais": 0,
+        "observacao": "Hóspede deixou o apartamento limpo e organizado ao sair"
     }
 ]
