@@ -65,17 +65,6 @@ def exibir_detalhes_apartamento(pos):
     print(f'{dado["nome_ap"]:<{tamanho}} {dado["quant_quarto"]:<7} {dado["quant_cozinha"]:<7} {dado["quant_banheiro"]:<7} {dado["quant_cama"]:<7} {tipos:<7}')
 
 
-
-def excluir_apartamento(pos):
-    lista_apartamentos = carregar_apartamentos()
-    print(linha())
-    print(f'Apartamento {lista_apartamentos[pos]["nome_ap"]} Removido com sucesso!')
-    print(linha())
-    lista_apartamentos.pop(pos)
-    salvar_apartamentos(lista_apartamentos)
-
-
-
 def editar_todo_apartamento(pos):
     lista_apartamentos = carregar_apartamentos()
     apartamento = dict()
@@ -122,4 +111,12 @@ def editar_dado_apartamento(pos, chave, txt):
     print(linha())
     print('Apartamento editado com sucesso!')
     print(linha())
+    salvar_apartamentos(lista_apartamentos)
+
+def excluir_apartamento(pos):
+    lista_apartamentos = carregar_apartamentos()
+    print(linha())
+    print(f'Apartamento {lista_apartamentos[pos]["nome_ap"]} Removido com sucesso!')
+    print(linha())
+    lista_apartamentos.pop(pos)
     salvar_apartamentos(lista_apartamentos)

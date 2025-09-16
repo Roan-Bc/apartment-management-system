@@ -1,9 +1,10 @@
 from modulos.interface import *
 from modulos.apartment import *
 from modulos.customer import *
+from version_01.modulos.reserve import *
 
 while True:
-    main_menu = exibeMenu(['Apartamento', 'Cliente', 'Sair do sistema'], 'Residencial Costão da Gamboa')
+    main_menu = exibeMenu(['Apartamento', 'Cliente', 'Reserva', 'Sair do sistema'], 'Residencial Costão da Gamboa')
     match main_menu:
         case 1:
 
@@ -132,13 +133,13 @@ while True:
         case 2:
 
             while True:
-                sub_menu = exibeMenu(['Cadastrar Cliente ', 'Exibir Cliente', 'Editar Cliente','Excluir Cliente', 'Voltar ao menu'])
+                sub_menu = exibeMenu(['Cadastrar Cliente ', 'Exibir Cliente', 'Editar Cliente','Excluir Cliente', 'Voltar ao menu'], 'Menu Cliente')
                 match sub_menu:
                     case 1:
                         cabecalho('Cadastrar Cliente')
                         cadastrar_cliente()
                     case 2:
-                        clientes = carregar_apartamentos()
+                        clientes = carregar_clientes()
                         if len(clientes) > 0:
                             cabecalho('Exibir clientes')
                             exibir_clientes()
@@ -152,21 +153,126 @@ while True:
                                         exibir_detalhes_cliente(pos)
                                         print(linha())
                                         break
+                                    else:
+                                        print('Opção inválida!')
                                 else:
-                                    print('Número inválido, digite novamente!')
+                                    print('Opção inválida!')
 
                         else:
                             print('Não há clientes cadastrados no momento para exibir!')
 
                     case 3:
-                        print('Editar Cliente')
+                        clientes = carregar_clientes()
+                        if len(clientes) > 0:
+                            cabecalho('Editar Cliente')
+                            exibir_clientes()
+                            print(linha())
+                            while True:
+                                pos = leiaInt('Digite o número do Cliente que deseja editar: ')
+                                pos -= 1
+                                if 0 <= pos < len(clientes):
+                                    while True:
+                                        sub_menu = exibeMenu(['Editar todos os dados do cliente','Editar um dado especifico do cliente','Voltar ao menu'], 'Editar dados do Cliente')
+                                        if sub_menu == 1:
+                                            cabecalho('Dados do cliente')
+                                            editar_cliente(pos)
+                                            break
+                                        elif sub_menu == 2:
+                                            while True:
+                                                sub_menu = exibeMenu(['Nome', 'pais', 'estado','endereco', 'id_fiscal','numero_telefone', 'numero_telefone_emergencia', 'idade', 'email'], 'Dados do cliente')
+                                                match sub_menu:
+
+                                                    case 1:
+                                                        editar_dado_cliente(pos, 'nome', 'nome completo')
+                                                        break
+                                                    case 2:
+                                                        editar_dado_cliente(pos, 'pais', 'pais')
+                                                        break
+                                                    case 3:
+                                                        editar_dado_cliente(pos, 'estado','estado')
+                                                        break
+                                                    case 4:
+                                                        editar_dado_cliente(pos, 'endereco', 'endereço')
+                                                        break
+                                                    case 5:
+                                                        editar_dado_cliente(pos, 'id_fiscal', 'id fiscal')
+                                                        break
+                                                    case 6:
+                                                        editar_dado_cliente(pos, 'numero_telefone', 'número de telefone')
+                                                    case 7:
+                                                        editar_dado_cliente(pos, 'numero_telefone','número de telefone de emergência')
+                                                    case 8:
+                                                        editar_dado_cliente(pos, 'numero_telefone', 'idade')
+                                                    case 9:
+                                                        editar_dado_cliente(pos, 'email','email')
+                                                    case _:
+                                                        print(linha())
+                                                        print('Opção Inválida!')
+                                                        print(linha())
+                                            break
+                                        elif sub_menu == 3:
+                                            break
+                                        else:
+                                            print(linha())
+                                            print('Opção inválida!')
+                                            print(linha())
+                                    break
+                                else:
+                                    print(linha())
+                                    print('Opção inválida!')
+                                    print(linha())
+                        else:
+                            print(linha())
+                            print('Não há clientes cadastrados no momento para editar!')
+                            print(linha())
                     case 4:
-                        print('Excluir cliente')
+                        clientes = carregar_clientes()
+                        if len(clientes) > 0:
+                            cabecalho('Excluir Cliente')
+                            exibir_clientes()
+                            while True:
+                                pos = leiaInt('Digite o número do cliente que deseja editar: ')
+                                pos -= 1
+                                if 0 <= pos < len(clientes):
+                                    excluir_cliente(pos)
+                                    break
+                                else:
+                                    print(linha())
+                                    print('Opção inválida!')
+                                    print(linha())
+
+                        else:
+                            print(linha())
+                            print('Não há clientes cadastrados no momento para excluir!')
+                            print(linha())
+
                     case 5:
                         break
                     case _:
                         print('Opção inválida!')
         case 3:
+            while True:
+                sub_menu = exibeMenu(['Cadastrar Reserva ', 'Exibir Reserva', 'Editar Reserva', 'Excluir Reserva', 'Voltar ao menu'],'Menu Reserva')
+                match sub_menu:
+                    case 1:
+                        cabecalho('Cadastrar reserva')
+                        cadastrar_reserva()
+                    case 2:
+                        clientes = carregar_clientes()
+                        if len(clientes) > 0:
+                            cabecalho('Exibir reservas')
+                            exibir_reservas()
+                        else:
+                            print('Não há reservas cadastradas no momento disponiveis para exibir!')
+                    case 3:
+                        print('Editar Reserva')
+                    case 4:
+                        print('Excluir reserva')
+                    case 5:
+                        break
+                    case _:
+                        print('Opção inválida')
+        case 4:
             linha()
             print('Saindo do sistema...')
             break

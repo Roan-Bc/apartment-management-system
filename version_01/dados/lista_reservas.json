@@ -1,0 +1,12 @@
+[
+    {
+        "nome_apartamento": "teste 4",
+        "nome_cliente": "Teste",
+        "plataforma": "Airbnb",
+        "valor": 100,
+        "check-in": "16/09/2025",
+        "check-out": "17/09/2025",
+        "quant_hospedes": 2,
+        "quant_animais": 0
+    }
+]
