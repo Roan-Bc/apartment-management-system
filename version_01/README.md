@@ -18,7 +18,7 @@
   *salvar_clientes*: A lista de clientes é convertida para JSON e salva no arquivo. Sempre que for necessário modificar a lista, é preciso chamar primeiro carregar_clientes, garantindo que os dados atuais sejam carregados corretamente. Após as alterações, a lista é passada para salvar_clientes, que atualiza o arquivo e mantém os dados sincronizados entre o programa e o arquivo JSON.
 
      ```python
-        from version_01.modulos.tests import *
+        from version_01.modulos.testes import *
         from version_01.modulos.interface import linha, cabecalho
         import json
         

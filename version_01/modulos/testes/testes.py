@@ -112,7 +112,7 @@ def verificaData(txt):
     caracters_validos = "0123456789/"
     while True:
         data = str(input(txt))
-        if all(c in caracters_validos for c in data):
+        if all(c in caracters_validos for c in data) and '/' in data:
             return data
         else:
             print("Data inválida, digite novamente!")

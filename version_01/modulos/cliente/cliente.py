@@ -1,6 +1,4 @@
-from unittest import case
-
-from version_01.modulos.tests import *
+from version_01.modulos.testes import *
 from version_01.modulos.interface import linha, cabecalho
 import json
 
@@ -22,6 +20,7 @@ def salvar_clientes(lista_clientes):
 
 
 def cadastrar_cliente():
+
     lista_clientes = carregar_clientes()
 
     cliente = dict()
@@ -38,12 +37,14 @@ def cadastrar_cliente():
 
     lista_clientes.append(cliente)
     salvar_clientes(lista_clientes)
+
     print(linha())
-    print('Cliente cadastrado com sucesso!')
+    print(f'Cliente {cliente["nome"]} cadastrado com sucesso!')
     print(linha())
 
 
 def exibir_clientes():
+
     lista_clientes = carregar_clientes()
 
     tamanho = len(lista_clientes[0]['nome'])
@@ -59,29 +60,37 @@ def exibir_clientes():
 
 
 def exibir_detalhes_cliente(pos):
+
     lista_clientes = carregar_clientes()
     cliente = lista_clientes[pos]
+
+    cabecalho(f'Exibir detalhes do cliente {cliente["nome"]}')
     for chave, valor in cliente.items():
-        if chave != 'id_fiscal':
+        if '_' in chave and chave != 'id_fiscal':
+            nova_chave = chave.replace('_',' de ')
+            print(f'{nova_chave}: {valor}')
+        elif chave != 'id_fiscal':
             print(f'{chave}: {valor}')
         else:
             id = ': '.join(valor)
             print(id)
 
 
-def editar_cliente(pos):
+def editar_todo_cliente(pos):
+
     lista_clientes = carregar_clientes()
 
     cliente = dict()
-    cliente['nome'] = leiaStr("Digite o seu nome completo: ")
-    cliente['pais'] = leiaStr("Digite seu pais: ")
-    cliente['estado'] = leiaStr("Digite seu estado: ")
-    cliente['endereco'] = leiaStr("Digite seu endereco: ")
+
+    cliente['nome'] = leiaStr("Digite o nome completo: ")
+    cliente['pais'] = leiaStr("Digite o pais: ")
+    cliente['estado'] = leiaStr("Digite o estado: ")
+    cliente['endereco'] = leiaStr("Digite o endereco: ")
     cliente['id_fiscal'] = verifica_idFiscal(cliente['pais'])
-    cliente['numero_telefone'] = verifica_Telefone("Digite o seu número de telefone: ")
-    cliente['numero_telefone_emergencia'] = verifica_Telefone("Digite o seu número de telefone de emergência: ")
-    cliente['idade'] = leiaInt("Digite sua idade: ")
-    cliente['email'] = verifica_Email("Digite sua email: ")
+    cliente['numero_telefone'] = verifica_Telefone("Digite o número de telefone: ")
+    cliente['numero_telefone_emergencia'] = verifica_Telefone("Digite o número de telefone de emergência: ")
+    cliente['idade'] = leiaInt("Digite a idade: ")
+    cliente['email'] = verifica_Email("Digite o email: ")
 
     lista_clientes[pos] = cliente.copy()
     salvar_clientes(lista_clientes)
@@ -89,40 +98,47 @@ def editar_cliente(pos):
     print(f'Cliente {cliente["nome"]} Editado com sucesso!')
     print(linha())
 
-def editar_dado_cliente(pos,chave,txt):
+def editar_dado_cliente(pos,chave, txt):
+
     lista_clientes = carregar_clientes()
+    cliente = lista_clientes[pos]
 
     match chave:
 
             case 'nome':
-                lista_clientes[pos][chave] = leiaStr(f'Digite o {txt}: ')
+                cliente[chave] = leiaStr(f'Digite o nome completo: ')
             case 'pais':
-                lista_clientes[pos][chave] = leiaStr(f'Digite o {txt}: ')
+                cliente[chave] = leiaStr(f'Digite o país: ')
             case 'estado':
-                lista_clientes[pos][chave] = leiaStr(f'Digite o {txt}: ')
+                cliente[chave] = leiaStr(f'Digite o estado: ')
             case 'endereco':
-                lista_clientes[pos][chave] = leiaStr(f'Digite o {txt}: ')
+                cliente[chave] = leiaStr(f'Digite o endereço: ')
             case 'id_fiscal':
-                lista_clientes[pos][chave] = verifica_idFiscal(lista_clientes[pos]['pais'])
+                cliente[chave] = verifica_idFiscal(cliente['pais'])
             case 'numero_telefone':
-                lista_clientes[pos][chave] = leiaInt(f'Digite o {txt}: ')
+                cliente[chave] = leiaInt(f'Digite o número de telefone: ')
             case 'numero_telefone_emergencia':
-                lista_clientes[pos][chave] = leiaInt(f'Digite o {txt}: ')
+                cliente[chave] = leiaInt(f'Digite o número de telefone de emergência: ')
             case 'idade':
-                lista_clientes[pos][chave] = leiaInt(f'Digite o {txt}: ')
+                cliente[chave] = leiaInt(f'Digite a idade: ')
             case 'email':
-                lista_clientes[pos][chave] = leiaStr(f'Digite o {txt}: ')
+                cliente[chave] = leiaStr(f'Digite o email: ')
 
     print(linha())
-    print(f'{chave} do cliente editado com sucesso!')
+    print(f'{txt} do cliente editado com sucesso!')
     print(linha())
+
+    lista_clientes[pos][chave] = cliente[chave]
     salvar_clientes(lista_clientes)
 
 
 def excluir_cliente(pos):
+
     lista_clientes = carregar_clientes()
+
     print(linha())
     print(f'Cliente {lista_clientes[pos]["nome"]} Removido com sucesso!')
     print(linha())
+
     lista_clientes.pop(pos)
     salvar_clientes(lista_clientes)

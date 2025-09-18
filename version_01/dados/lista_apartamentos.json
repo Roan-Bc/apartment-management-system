@@ -6,7 +6,15 @@
         "quant_banheiro": 1,
         "quant_cama": 1,
         "tipo_cama": [
-            "Casal"
+            "teste"
         ]
+    },
+    {
+        "nome_ap": "teste 3",
+        "quant_quarto": 1,
+        "quant_cozinha": 1,
+        "quant_banheiro": 1,
+        "quant_cama": 0,
+        "tipo_cama": "N/A"
     }
 ]
